@@ -12,7 +12,7 @@ function fexit {
 $1
 exitstatus=$?
 if [ $exitstatus = 1 ]; then
-    whiptail --clear  --title "Nettemp installer" --msgbox "Error $1" 8 78
+    
     echo -e "[ ${red}error${R} ] Error in $2"
     exit 1
 else
@@ -41,20 +41,20 @@ source $dir/install/run.sh
 
 
 function start {
-whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want install nettemp?" 8 78
+
 exitstatus=0
 if [ $exitstatus = 1 ]; then
     echo "bye.."
     exit 1s
 fi
 
-whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want start APC UPS?" 8 78
+
 exitstatus2=1
 if [ $exitstatus2 = 0 ]; then
     APCUPS=yes
 fi
 
-whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want send anonymous stats about Nettemp" 8 78
+
 exitstatus3=1
 if [ $exitstatus3 = 0 ]; then
     SENDSTATS=yes
