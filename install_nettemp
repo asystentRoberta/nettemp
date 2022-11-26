@@ -8,16 +8,6 @@ YELLOW='\033[00;33m'
 
 dir=/var/www/nettemp
 
-if [[ ! $(pwd) = "$dir" ]]; then
-        whiptail --title "Nettemp installer" --msgbox "Nettemp installer must be in /var/www/nettemp dir. Hit OK to exit." 8 78
-exit 1
-fi 
-
-if [[ $UID -ne 0 ]]; then
-    whiptail --title "Nettemp installer" --msgbox "You must be root. Hit OK to exit." 8 78
-exit 1
-fi 
-
 function fexit {
 $1
 exitstatus=$?
@@ -31,8 +21,6 @@ fi
 }
 
 function end {
-whiptail  --title "Nettemp installer" --msgbox "Nettemp successfully installed. Your user and password is \"admin\"." 8 78
-whiptail  --title "Nettemp installer" --msgbox "admin admin - remember!" 8 78
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     if int=$(ifconfig eth0 2>/dev/null|awk '/inet / {print $2}'|sed 's/inet//'); then
@@ -54,20 +42,20 @@ source $dir/install/run.sh
 
 function start {
 whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want install nettemp?" 8 78
-exitstatus=$?
+exitstatus=0
 if [ $exitstatus = 1 ]; then
     echo "bye.."
     exit 1s
 fi
 
 whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want start APC UPS?" 8 78
-exitstatus2=$?
+exitstatus2=1
 if [ $exitstatus2 = 0 ]; then
     APCUPS=yes
 fi
 
 whiptail  --backtitle "Nettemp.pl" --title "Nettemp installer" --yesno "Do You want send anonymous stats about Nettemp" 8 78
-exitstatus3=$?
+exitstatus3=1
 if [ $exitstatus3 = 0 ]; then
     SENDSTATS=yes
 fi
@@ -77,4 +65,3 @@ fi
 start
 fexit run Installation
 end
-
